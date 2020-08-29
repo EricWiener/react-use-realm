@@ -151,6 +151,20 @@ const workspaceTodos = useRealmQuery({
 });
 ```
 
+#### Filtering Example with Delay
+If you are using Realm to handle remote changes, you might
+not want to update too often. You can specify a delay (in ms)
+to wait between force updating. If a new update comes in before
+the time is up, the new update will override the previous one.
+
+```javascript
+const todos = useRealmQuery({
+  source: TodoSchema.name,
+  filter: 'done != true',
+  delayTime: 500,
+});
+```
+
 ## License
 
 [MIT](https://github.com/kedarvaidya/react-use-realm/blob/master/LICENSE)
