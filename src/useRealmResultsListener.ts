@@ -1,8 +1,28 @@
 import * as React from "react";
 import useForceUpdate from "use-force-update";
+import {useCallback} from "react";
+import { delay } from "./utils";
 
-export default function useRealmResultsListener<T>(query: Realm.Results<T> | undefined) {
+export default function useRealmResultsListener<T>(query: Realm.Results<T> | undefined, delayTime: number = 0) {
   const forceUpdate = useForceUpdate();
+
+  const delayAmount = delayTime ? delayTime : 0;
+  const realmUpdateCounter = React.useRef(0).current;
+
+  const delayedForceUpdate = useCallback(async () => {
+    // Check what the current counter is it
+    const count = realmUpdateCounter;
+
+    // Wait a bit for any new updates
+    await delay(delayAmount);
+
+    // Check if a new update came in and changed the counter
+    if (realmUpdateCounter !== count) {
+      // Skip the update because another update came in
+      return;
+    }
+    forceUpdate();
+  }, [forceUpdate, delayAmount]);
 
   React.useEffect(() => {
     function handleChange(
@@ -11,15 +31,15 @@ export default function useRealmResultsListener<T>(query: Realm.Results<T> | und
     ) {
       const { insertions, modifications, deletions } = changes;
       if (insertions.length + modifications.length + deletions.length > 0) {
-        forceUpdate();
+        delayedForceUpdate();
       }
     }
-    
+
     if (query) {
       query.addListener(handleChange);
       return () => query.removeListener(handleChange);
     }
-  }, [query, forceUpdate]);
+  }, [query, delayedForceUpdate]);
 
   return query;
 }

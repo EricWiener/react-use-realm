@@ -9,6 +9,7 @@ export interface IUseRealmQueryParams<T> {
   filter?: string;
   variables?: any[];
   sort?: Realm.SortDescriptor[];
+  delayTime?: number;
 }
 
 export function useRealmQuery<T>({
@@ -16,7 +17,8 @@ export function useRealmQuery<T>({
   sourceKey,
   filter,
   variables,
-  sort
+  sort,
+  delayTime,
 }: IUseRealmQueryParams<T>): Realm.Collection<T> | undefined {
   const { realm } = React.useContext(RealmContext);
 
@@ -43,7 +45,7 @@ export function useRealmQuery<T>({
     }
   }, [realm, finalSourceKey , filter, ...(variables ? variables : []), ...(sort ? flattenArrayOfArrays(sort) : [])]);
 
-  useRealmResultsListener<T>(query);
+  useRealmResultsListener<T>(query, delayTime);
 
   return query;
 }
