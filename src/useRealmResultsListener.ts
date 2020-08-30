@@ -27,10 +27,10 @@ export default function useRealmResultsListener<T>(query: Realm.Results<T> | und
   React.useEffect(() => {
     function handleChange(
       _collection: Realm.Collection<T>,
-      changes: Realm.CollectionChangeSet
+      changes: Realm.ObjectChanges
     ) {
-      const { insertions, modifications, deletions } = changes;
-      if (insertions.length + modifications.length + deletions.length > 0) {
+      const { insertions, newModifications, oldModifications, deletions } = changes;
+      if (insertions.length + newModifications.length + oldModifications.length + deletions.length > 0) {
         delayedForceUpdate();
       }
     }
