@@ -11,7 +11,7 @@ export default function useRealmResultsListener<T>(query: Realm.Results<T> | und
 
   const delayedForceUpdate = useCallback(async () => {
     // Check what the current counter is it
-    const count = realmUpdateCounter;
+    const count = realmUpdateCounter.current;
 
     // Update the counter ref
     realmUpdateCounter.current += realmUpdateCounter.current;
@@ -20,8 +20,9 @@ export default function useRealmResultsListener<T>(query: Realm.Results<T> | und
     await delay(delayAmount);
 
     // Check if a new update came in and changed the counter
-    if (realmUpdateCounter !== count) {
+    if (realmUpdateCounter.current !== count) {
       // Skip the update because another update came in
+      console.log('useRealmResultsListener skipping update');
       return;
     }
     forceUpdate();
