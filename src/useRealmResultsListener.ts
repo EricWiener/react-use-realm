@@ -7,11 +7,14 @@ export default function useRealmResultsListener<T>(query: Realm.Results<T> | und
   const forceUpdate = useForceUpdate();
 
   const delayAmount = delayTime ? delayTime : 0;
-  const realmUpdateCounter = React.useRef(0).current;
+  const realmUpdateCounter = React.useRef(0);
 
   const delayedForceUpdate = useCallback(async () => {
     // Check what the current counter is it
     const count = realmUpdateCounter;
+
+    // Update the counter ref
+    realmUpdateCounter.current += realmUpdateCounter.current;
 
     // Wait a bit for any new updates
     await delay(delayAmount);
