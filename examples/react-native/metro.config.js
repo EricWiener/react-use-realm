@@ -20,6 +20,6 @@ module.exports = {
     }),
   },
   watchFolders: Array.from(
-    new Set(getDevPaths(projectRoot).map($ => fs.realpathSync($))),
+    new Set(getDevPaths(projectRoot).map(($) => fs.realpathSync($))),
   ),
 };

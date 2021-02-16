@@ -9,14 +9,11 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 
-import { RealmProvider } from 'react-use-realm';
+import {RealmProvider} from 'react-use-realm';
 
-import { realm, seedDatabase } from './database';
+import {realm, seedDatabase} from './database';
 
 import Screen from './Screen';
 

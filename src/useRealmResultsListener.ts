@@ -1,9 +1,12 @@
 import * as React from "react";
 import useForceUpdate from "use-force-update";
-import {useCallback} from "react";
+import { useCallback } from "react";
 import { delay } from "./utils";
 
-export default function useRealmResultsListener<T>(query: Realm.Results<T> | undefined, delayTime: number = 0) {
+export default function useRealmResultsListener<T>(
+  query: Realm.Results<T> | undefined,
+  delayTime: number = 0
+) {
   const forceUpdate = useForceUpdate();
 
   const delayAmount = delayTime ? delayTime : 0;
@@ -31,10 +34,21 @@ export default function useRealmResultsListener<T>(query: Realm.Results<T> | und
   React.useEffect(() => {
     function handleChange(
       _collection: Realm.Collection<T>,
-      changes: Realm.ObjectChanges
+      changes: Realm.CollectionChangeSet
     ) {
-      const { insertions, newModifications, oldModifications, deletions } = changes;
-      if (insertions.length + newModifications.length + oldModifications.length + deletions.length > 0) {
+      const {
+        insertions,
+        newModifications,
+        oldModifications,
+        deletions,
+      } = changes;
+      if (
+        insertions.length +
+          newModifications.length +
+          oldModifications.length +
+          deletions.length >
+        0
+      ) {
         delayedForceUpdate();
       }
     }
