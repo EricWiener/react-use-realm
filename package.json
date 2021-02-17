@@ -49,6 +49,23 @@
     "react": ">=16.13.4",
     "realm": ">=10.2.0"
   },
+  "release-it": {
+    "git": {
+      "commitMessage": "CHORE: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": false
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
   "files": [
     "dist"
   ],
