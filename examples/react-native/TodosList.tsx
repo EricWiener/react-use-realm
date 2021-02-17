@@ -25,7 +25,7 @@ function TodoItem({todo}: {todo: ITodo}) {
     <View style={{flexDirection: 'row', alignItems: 'center', margin: 16}}>
       <Switch value={!!todo.doneAt} onValueChange={() => toggleTodo()} />
       <Text style={{flex: 1, marginLeft: 8}}>{todo.title}</Text>
-    </View>;
+    </View>
   );
 }
 

@@ -9,5 +9,4 @@ export function flattenArrayOfArrays(arrayOfArrays: any[][]) {
  * await delay(5000);
  * console.log("Waited 5s");
  */
-export const delay = (ms: number): Promise<void> =>
-  new Promise((res) => setTimeout(res, ms));
+export const delay = (ms: number): Promise<void> => new Promise((res) => setTimeout(res, ms));

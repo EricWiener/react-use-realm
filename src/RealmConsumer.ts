@@ -1,4 +1,3 @@
-import React from 'react';
-import { RealmContext } from './RealmContext';
+import {RealmContext} from './RealmContext';
 
 export const RealmConsumer = RealmContext.Consumer;
